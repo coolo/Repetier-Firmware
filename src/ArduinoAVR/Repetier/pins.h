@@ -2172,6 +2172,69 @@ S3(ext)=9
 #define E1_PINS
 #endif
 
+/****************************************************************************************
+* Baboi Box V1.1
+* http://file.mixshop.com/forum/upload/PinMap_Baboi_v1.1.pdf
+*
+****************************************************************************************/
+#if MOTHERBOARD == 401
+#define KNOWN_BOARD
+
+#if !defined(__AVR_ATmega2560__)
+#error Oops! Make sure you have 'Arduino Mega 2560' selected from the 'Tools -> Boards' menu.
+#endif
+
+//x axis pins
+#define ORIG_X_STEP_PIN 23
+#define ORIG_X_DIR_PIN 24
+#define ORIG_X_ENABLE_PIN 22
+#define ORIG_X_MIN_PIN 35
+#define ORIG_X_MAX_PIN -1
+
+//y axis pins
+#define ORIG_Y_STEP_PIN 26
+#define ORIG_Y_DIR_PIN 27
+#define ORIG_Y_ENABLE_PIN 25
+#define ORIG_Y_MIN_PIN 36
+#define ORIG_Y_MAX_PIN -1
+
+//z axis pins
+#define ORIG_Z_STEP_PIN 29
+#define ORIG_Z_DIR_PIN 39
+#define ORIG_Z_ENABLE_PIN 28
+#define ORIG_Z_MIN_PIN 37
+#define ORIG_Z_MAX_PIN 38
+
+//extruder pins
+#define ORIG_E0_STEP_PIN 31
+#define ORIG_E0_DIR_PIN 32
+#define ORIG_E0_ENABLE_PIN 30
+#define TEMP_0_PIN 14
+#define TEMP_1_PIN 13
+#define HEATER_0_PIN 2
+#define HEATER_1_PIN 3
+
+#define LED_PIN -1
+
+#define ORIG_FAN_PIN 5
+#define PS_ON_PIN 12
+//our pin for debugging.
+
+#define DEBUG_PIN -1
+
+//our RS485 pins
+#define TX_ENABLE_PIN	12
+#define RX_ENABLE_PIN	13
+
+#define SDPOWER -1
+#define SDSS 53
+
+#define SCK_PIN 52
+#define MISO_PIN 50
+#define MOSI_PIN 51
+#define E0_PINS ORIG_E0_STEP_PIN,ORIG_E0_DIR_PIN,ORIG_E0_ENABLE_PIN,
+#define E1_PINS
+#endif
 
 #if MOTHERBOARD == 999
 #define KNOWN_BOARD
@@ -2243,7 +2306,7 @@ S3(ext)=9
 #define FAN2_PIN ORIG_FAN2_PIN
 
 
-#define SENSITIVE_PINS {0, 1, X_STEP_PIN, X_DIR_PIN, X_ENABLE_PIN, ORIG_X_MIN_PIN, X_MAX_PIN, Y_STEP_PIN, Y_DIR_PIN, Y_ENABLE_PIN, Y_MIN_PIN, Y_MAX_PIN, Z_STEP_PIN, Z_DIR_PIN, Z_ENABLE_PIN, Z_MIN_PIN, Z_MAX_PIN, LED_PIN, PS_ON_PIN, \
+#define SENSITIVE_PINS {0, 1, X_STEP_PIN, X_DIR_PIN, X_ENABLE_PIN, X_MIN_PIN, X_MAX_PIN, Y_STEP_PIN, Y_DIR_PIN, Y_ENABLE_PIN, Y_MIN_PIN, Y_MAX_PIN, Z_STEP_PIN, Z_DIR_PIN, Z_ENABLE_PIN, Z_MIN_PIN, Z_MAX_PIN, LED_PIN, PS_ON_PIN, \
                         HEATER_0_PIN, HEATER_1_PIN, ORIG_FAN_PIN, E0_PINS E1_PINS E2_PINS TEMP_0_PIN, TEMP_1_PIN,SDSS }
 #endif
 
