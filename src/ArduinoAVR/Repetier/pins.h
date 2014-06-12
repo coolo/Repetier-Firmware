@@ -1950,7 +1950,7 @@ S3(ext)=9
 #define SDPOWER        -1
 #define SDSS           53
 #define LED_PIN        13
-#define ORIG_FAN_PIN        8
+#define ORIG_FAN_PIN        5
 #define PS_ON_PIN      4
 #define SUICIDE_PIN    -1  //PIN that has to be turned on right after start, to keep power flowing.
 

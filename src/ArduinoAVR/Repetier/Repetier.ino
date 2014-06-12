@@ -128,7 +128,7 @@ Custom M Codes
 #include <SPI.h>
 
 #if UI_DISPLAY_TYPE==4
-//#include <LiquidCrystal.h> // Uncomment this if you are using liquid crystal library
+#include <LiquidCrystal.h> // Uncomment this if you are using liquid crystal library
 #endif
 
 void setup()
