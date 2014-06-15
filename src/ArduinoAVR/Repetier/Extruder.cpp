@@ -513,7 +513,7 @@ const short temptable_9[NUMTEMPS_9][2] PROGMEM =
     {558*4, 110*8},{591*4, 105*8},{628*4, 100*8},{660*4, 95*8},{696*4, 90*8},{733*4, 85*8},{761*4, 80*8},{794*4, 75*8},
     {819*4, 70*8},{847*4, 65*8},{870*4, 60*8},{892*4, 55*8},{911*4, 50*8},{929*4, 45*8},{944*4, 40*8},{959*4, 35*8},
     {971*4, 30*8},{981*4, 25*8},{989*4, 20*8},{994*4, 15*8},{1001*4, 10*8},{1005*4, 5*8},{1023*4, 0}
- };
+};
 #define NUMTEMPS_10 20 // 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup)
 const short temptable_10[NUMTEMPS_10][2] PROGMEM =
 {
@@ -618,8 +618,10 @@ void TemperatureController::updateCurrentTemperature()
         currentTemperature = 4095; // unknown method, return high value to switch heater off for safety
     }
     int currentTemperature = this->currentTemperature;
-    //OUT_P_I_LN("Sensor ", sensorPin);
-    //OUT_P_I_LN("OC for raw ",osAnalogInputValues[sensorPin]);
+    if (sensorPin == 42) {
+    OUT_P_I_LN("Sensor ", sensorPin);
+    OUT_P_I_LN("OC for raw ",osAnalogInputValues[sensorPin]);
+    }
     switch(type)
     {
     case 1:

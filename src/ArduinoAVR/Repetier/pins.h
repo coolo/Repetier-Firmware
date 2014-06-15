@@ -2209,12 +2209,16 @@ S3(ext)=9
 #define ORIG_E0_STEP_PIN 31
 #define ORIG_E0_DIR_PIN 32
 #define ORIG_E0_ENABLE_PIN 30
-#define TEMP_0_PIN 14
-#define TEMP_1_PIN 13
+#define TEMP_0_PIN 13
+#define TEMP_1_PIN 14
 #define HEATER_0_PIN 2
 #define HEATER_1_PIN 3
 
 #define LED_PIN -1
+
+#define JOYSTICK_VERT_PIN 3 // analog pin
+#define JOYSTICK_HORI_PIN 4 // analog pin
+#define JOYSTICK_SELECT_PIN 16 // digial pin
 
 #define ORIG_FAN_PIN 5
 #define PS_ON_PIN 12

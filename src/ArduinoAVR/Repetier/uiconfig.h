@@ -98,7 +98,7 @@ What display type do you use?
                If you have Sanguino and want to use the library, you need to have Arduino 023 or older. (13.04.2012)
 5 = U8G supported display
 */
-#define UI_DISPLAY_TYPE 4
+#define UI_DISPLAY_TYPE 1
 
 #if UI_DISPLAY_TYPE == 5 // Special case for graphic displays
 
@@ -211,7 +211,7 @@ Define the pin
 0 = No keys attached - disables also menu
 1 = Some keys attached
 */
-#define UI_HAS_KEYS 0
+#define UI_HAS_KEYS 1
 
 
 /** \brief Is a back key present.
@@ -334,6 +334,7 @@ Type 3: Show menu action. These actions have a _MENU_ in their name. If they are
 const int matrixActions[] PROGMEM = UI_MATRIX_ACTIONS;
 #endif
 
+#include "Communication.h"
 void ui_init_keys() {
 #if UI_HAS_KEYS!=0
   //UI_KEYS_INIT_CLICKENCODER_LOW(33,31); // click encoder on pins 47 and 45. Phase is connected with gnd for signals.
@@ -347,7 +348,12 @@ void ui_init_keys() {
 //  UI_KEYS_INIT_BUTTON_LOW(43); // push button, connects gnd to pin
 //  UI_KEYS_INIT_MATRIX(32,47,45,43,41,39,37,35);
 #endif
+  SET_INPUT(16); // select key
+  //SET_INPUT(PINA3);
+  //SET_INPUT(PINA4);
 }
+extern void check_joystick(int &action);
+
 void ui_check_keys(int &action) {
 #if UI_HAS_KEYS!=0
 
@@ -360,7 +366,9 @@ void ui_check_keys(int &action) {
 //  UI_KEYS_CLICKENCODER_LOW_REV(47,45); // click encoder on pins 47 and 45. Phase is connected with gnd for signals.
 //  UI_KEYS_BUTTON_LOW(43,UI_ACTION_OK); // push button, connects gnd to pin
 #endif
+   check_joystick(action);
 }
+
 inline void ui_check_slow_encoder() {
 #if defined(UI_HAS_I2C_KEYS) && UI_HAS_KEYS!=0
 #if UI_DISPLAY_I2C_CHIPTYPE==0

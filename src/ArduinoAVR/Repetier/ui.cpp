@@ -1884,8 +1884,45 @@ void UIDisplay::pushMenu(void *men,bool refresh)
     if(refresh)
         refreshPage();
 }
+
+void check_joystick(int &action) {
+    int vertical = osAnalogInputValues[JOYSTICK_VERT_INDEX]; // will be 0-4096
+    int horizontal = osAnalogInputValues[JOYSTICK_HORI_INDEX]; // will be 0-4096
+    int select = digitalRead(JOYSTICK_SELECT_PIN); // will be HIGH (1) if not pressed, and LOW (0) if pressed
+        
+     if(horizontal < 2200 && horizontal > 1800) { // around "not moved"
+        if (vertical < 50) { // left
+             action = UI_ACTION_BACK;
+        } else if (vertical > 4000) { // right
+             action = UI_ACTION_MENU_UP;
+        }
+    }
+    if (vertical < 2200 && vertical > 1800 ) {
+          if (horizontal > 4000 ) { // down
+              action = UI_ACTION_PREVIOUS;
+          } else if (horizontal < 50) { // up
+              action = UI_ACTION_NEXT;
+            }
+        }
+        
+       if (!select) {
+          action = UI_ACTION_OK;
+       }
+/*UI_ACTION_PREVIOUS // up
+UI_ACTION_NEXT // down
+UI_ACTION_BACK // left
+UI_ACTION_OK // ok ?
+
+UI_ACTION_MENU_UP
+*/
+//HAL::delayMicroseconds(40);
+
+}
+
 void UIDisplay::okAction()
 {
+  Com::print("okAction");
+  Com::println();
     if(Printer::isUIErrorMessage()) {
         Printer::setUIErrorMessage(false);
         return;
@@ -2045,6 +2082,7 @@ void UIDisplay::adjustMenuPos()
 
 void UIDisplay::nextPreviousAction(int8_t next)
 {
+    Com::printFLN(PSTR("isUI: "), Printer::isUIErrorMessage());
     if(Printer::isUIErrorMessage()) {
         Printer::setUIErrorMessage(false);
         return;
@@ -2462,6 +2500,8 @@ void UIDisplay::finishAction(int action)
 // action can behave differently. Other actions do always the same like home, disable extruder etc.
 void UIDisplay::executeAction(int action)
 {
+  Com::printFLN(PSTR("action: "), action);
+  
 #if UI_HAS_KEYS==1
     bool skipBeep = false;
     if(action & UI_ACTION_TOPMENU)   // Go to start menu
@@ -2469,6 +2509,7 @@ void UIDisplay::executeAction(int action)
         action -= UI_ACTION_TOPMENU;
         menuLevel = 0;
     }
+    Com::printFLN(PSTR("action2: "), action);
     if(action>=2000 && action<3000)
     {
         setStatusP(ui_action);
@@ -2976,6 +3017,8 @@ void UIDisplay::slowAction()
 #endif
         int nextAction = 0;
         ui_check_slow_keys(nextAction);
+        Com::printF(PSTR("lastA: "), (int)lastButtonAction);
+        Com::printFLN(PSTR("next: "), nextAction);
         if(lastButtonAction!=nextAction)
         {
             lastButtonStart = time;
