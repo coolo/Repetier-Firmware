@@ -211,7 +211,7 @@ Define the pin
 0 = No keys attached - disables also menu
 1 = Some keys attached
 */
-#define UI_HAS_KEYS 1
+#define UI_HAS_KEYS 0
 
 
 /** \brief Is a back key present.
