@@ -503,16 +503,12 @@ const short temptable_8[NUMTEMPS_8][2] PROGMEM =
     {422,1520},{511,1440},{621,1360},{755,1280},{918,1200},{1114,1120},{1344,1040},{1608,960},{1902,880},{2216,800},{2539,720},
     {2851,640},{3137,560},{3385,480},{3588,400},{3746,320},{3863,240},{3945,160},{4002,80},{4038,0},{4061,-80},{4075,-160}
 };
-#define NUMTEMPS_9 56 // 100k Honeywell 135-104LAG-J01
+#define NUMTEMPS_9 21 // 100k Honeywell 135-104LAG-J01
 const short temptable_9[NUMTEMPS_9][2] PROGMEM =
 {
-    {1*4, 500*8},{46*4, 270*8},{50*4, 265*8},{54*4, 260*8},{58*4, 255*8},{62*4, 250*8},{67*4, 245*8},{72*4, 240*8},{79*4, 235*8},
-    {85*4, 230*8},{91*4, 225*8},{99*4, 220*8},{107*4, 215*8},{116*4, 210*8},{126*4, 205*8},{136*4, 200*8},{149*4, 195*8},
-    {160*4, 190*8},{175*4, 185*8},{191*4, 180*8},{209*4, 175*8},{224*4, 170*8},{246*4, 165*8},{267*4, 160*8},{293*4, 155*8},
-    {316*4, 150*8},{340*4, 145*8},{364*4, 140*8},{396*4, 135*8},{425*4, 130*8},{460*4, 125*8},{489*4, 120*8},{526*4, 115*8},
-    {558*4, 110*8},{591*4, 105*8},{628*4, 100*8},{660*4, 95*8},{696*4, 90*8},{733*4, 85*8},{761*4, 80*8},{794*4, 75*8},
-    {819*4, 70*8},{847*4, 65*8},{870*4, 60*8},{892*4, 55*8},{911*4, 50*8},{929*4, 45*8},{944*4, 40*8},{959*4, 35*8},
-    {971*4, 30*8},{981*4, 25*8},{989*4, 20*8},{994*4, 15*8},{1001*4, 10*8},{1005*4, 5*8},{1023*4, 0}
+  {1*4, 916*8},{54*4, 265*8},{107*4, 216*8},{160*4, 189*8},{213*4, 171*8},{266*4, 157*8},{319*4, 146*8},{372*4, 136*8},
+  {425*4, 127*8},{478*4, 118*8},{531*4, 110*8},{584*4, 103*8},{637*4, 95*8},{690*4, 88*8},{743*4, 80*8},{796*4, 71*8},
+  {849*4, 62*8},{902*4, 50*8},{955*4, 34*8}, {984*4,24*8}, {1008*4, 2*8}
 };
 #define NUMTEMPS_10 20 // 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup)
 const short temptable_10[NUMTEMPS_10][2] PROGMEM =
@@ -572,6 +568,8 @@ const uint8_t temptables_num[12] PROGMEM = {NUMTEMPS_1,NUMTEMPS_2,NUMTEMPS_3,NUM
                                            };
 
 
+static int previousOCOutput = 0;
+
 void TemperatureController::updateCurrentTemperature()
 {
     uint8_t type = sensorType;
@@ -618,9 +616,11 @@ void TemperatureController::updateCurrentTemperature()
         currentTemperature = 4095; // unknown method, return high value to switch heater off for safety
     }
     int currentTemperature = this->currentTemperature;
-    if (sensorPin == 42) {
-    OUT_P_I_LN("Sensor ", sensorPin);
-    OUT_P_I_LN("OC for raw ",osAnalogInputValues[sensorPin]);
+    int output = (osAnalogInputValues[sensorPin] + 2) / 4;
+    if (sensorPin == 0 && previousOCOutput != output ) {
+      /*OUT_P_I_LN("Sensor ", sensorPin);*/
+      OUT_P_I_LN("OC for raw ", output);
+      previousOCOutput = output;
     }
     switch(type)
     {
