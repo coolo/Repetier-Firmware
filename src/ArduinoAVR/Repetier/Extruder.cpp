@@ -617,8 +617,8 @@ void TemperatureController::updateCurrentTemperature()
     }
     int currentTemperature = this->currentTemperature;
     int output = (osAnalogInputValues[sensorPin] + 2) / 4;
-    if (sensorPin == 0 && previousOCOutput != output ) {
-      /*OUT_P_I_LN("Sensor ", sensorPin);*/
+    if (sensorPin == 1 && previousOCOutput != output ) {
+      OUT_P_I_LN("Sensor ", sensorPin);
       OUT_P_I_LN("OC for raw ", output);
       previousOCOutput = output;
     }

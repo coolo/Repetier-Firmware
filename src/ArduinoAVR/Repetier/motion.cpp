@@ -243,9 +243,9 @@ void PrintLine::calculateMove(float axis_diff[],uint8_t pathOptimize)
     bool critical = Printer::isZProbingActive();
     if(linesCount < MOVE_CACHE_LOW && timeForMove < LOW_TICKS_PER_MOVE)   // Limit speed to keep cache full.
     {
-        //OUT_P_I("L:",lines_count);
+        //OUT_P_I("L:",linesCount);
         timeForMove += (3 * (LOW_TICKS_PER_MOVE-timeForMove)) / (linesCount+1); // Increase time if queue gets empty. Add more time if queue gets smaller.
-        //OUT_P_F_LN("Slow ",time_for_move);
+        //OUT_P_F_LN("Slow ",timeForMove);
         critical=true;
     }
     timeInTicks = timeForMove;
